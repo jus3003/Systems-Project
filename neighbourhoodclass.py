@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[5]:
+# In[1]:
 
 
 class Neighbourhood:
@@ -42,7 +42,7 @@ class Neighbourhood:
         
         for agent in self.resident_list:
             
-            self.monthly_utilization[agent.transit - 1] += 1
+            self.monthly_utilization[agent.transit] += 1
             
         # track utilization to inform annual investments
         self.annual_utilization += self.monthly_utilization
@@ -72,29 +72,33 @@ class Neighbourhood:
             self.commutescores[i][1] = self.commutescores[i][1] + self.annual_utilization[i] * city_priorities[i] / 100
 
 
-# In[6]:
+# In[2]:
 
 
 # Define neighbourhoods (this may go in main)
 # scores out of 10: drive, bus, bike, walk; convenience, speed, affordability, sustainability
 
-# from neighbourhoodclass import Neighbourhood
+# using population = populate_Austin(n)
 
-west = Neighbourhood(1200,[[7, 7, 3, 3], [5, 5, 10, 8], [4, 5, 5, 9], [3, 3, 10, 10]], 1)
+def initiate_neighbourhoods(population):
 
-north = Neighbourhood(1000, [[7, 7, 3, 3], [6, 5, 10, 8], [4, 5, 5, 9], [2, 2, 10, 10]], 2)
+    west = Neighbourhood(1200,[[7, 7, 3, 3], [5, 5, 10, 8], [4, 5, 5, 9], [3, 3, 10, 10]], 0)
 
-riverside = Neighbourhood(900, [[7, 7, 3, 3], [4, 4, 10, 8], [3, 3, 5, 9], [1, 1, 10, 10]], 3)
+    north = Neighbourhood(1000, [[7, 7, 3, 3], [6, 5, 10, 8], [4, 5, 5, 9], [2, 2, 10, 10]], 1)
 
-all_neighbourhoods = [west, north, riverside]
+    riverside = Neighbourhood(900, [[7, 7, 3, 3], [4, 4, 10, 8], [3, 3, 5, 9], [1, 1, 10, 10]], 2)
 
-for neighbourhood in all_neighbourhoods:
-    neighbourhood.define_residents(population)
-    neighbourhood.housing_supply = len(neighbourhood.resident_list)
+    all_neighbourhoods = [west, north, riverside]
+
+    for neighbourhood in all_neighbourhoods:
+        neighbourhood.define_residents(population)
+        neighbourhood.housing_supply = len(neighbourhood.resident_list)
+
+    return all_neighbourhoods
 
 
 
-# In[ ]:
+# In[3]:
 
 
 
