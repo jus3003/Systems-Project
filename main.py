@@ -1,7 +1,7 @@
 # Define neighbourhoods
 # scores out of 10: drive, bus, bike, walk; convenience, speed, affordability, sustainability
 
-import agentclass_JF
+import agentclass
 from neighbourhoodclass import Neighbourhood
 
 population = agentclass_JF.populate_Austin(20)
