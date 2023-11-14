@@ -58,8 +58,6 @@ def populate_Austin(population):
 
     return population_list
 
-population = populate_Austin(20)
-
 
 # In[ ]:
 
