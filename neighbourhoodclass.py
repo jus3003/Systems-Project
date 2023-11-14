@@ -88,6 +88,11 @@ riverside = Neighbourhood(900, [[7, 7, 3, 3], [4, 4, 10, 8], [3, 3, 5, 9], [1, 1
 
 all_neighbourhoods = [west, north, riverside]
 
+for neighbourhood in all_neighbourhoods:
+    neighbourhood.define_residents(population)
+    neighbourhood.housing_supply = len(neighbourhood.resident_list)
+
+
 
 # In[ ]:
 
