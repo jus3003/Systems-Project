@@ -37,7 +37,7 @@ def populate_Austin(population):
     #Create Population List
     population_list = []
     for i in range(0,population):
-        assign_neighbourhood = random.randint(0,3) 
+        assign_neighbourhood = random.randint(0,2) 
         assign_transit = random.randint(0,3) #0/1/2/3 = drive/bus/bike/walk
         assign_priorities = priority_randomizer()
         population_list.append(Agent(id = i, neighbourhood = assign_neighbourhood, transit = assign_transit, priorities = assign_priorities))
