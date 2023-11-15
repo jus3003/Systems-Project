@@ -10,7 +10,8 @@ class Agent:
         #Fixed Variables
         self.priorities = priorities #weighted list out of 1 [convenience, speed, affordability, sustainability]
         #Past/Future Variables
-        self.transit_prev, self.transit_next, self.satisfaction_prev, self.satisfaction_next = 0, 0, 0, 0
+        self.transit_prev, self.transit_next, self.satisfaction_prev, self.satisfaction_next = -1, -1, -1, -1
+        self.testing_commute_option = False
         self.commutes_tried_in_curr_neighbourhood = []
 
     def update_transit(self, transit_type):
@@ -20,15 +21,24 @@ class Agent:
         metrics_list = neighbourhood_list[self.neighbourhood].commutescores[self.transit] #grabs scores for current neighbourhood and mode of transit
         self.satisfaction = sum([a*b for a,b in zip(metrics_list, self.priorities)])
 
-    def monthly_agent_interaction(self, neighbourhood_list):
+    def monthly_neighbour_interaction(self, neighbourhood_list):
         neighbours = neighbourhood_list[self.neighbourhood].resident_list
 
         interacting_agent = neighbours[random.randint(0,len(neighbours)-1)]
-        while (interacting_agent.id == self.id): #Checks that we don't select ourselves to tak to 
+        while (interacting_agent.id == self.id): #Checks that we don't select ourselves to talk to 
             interacting_agent = neighbours[random.randint(0,len(neighbours)-1)]
 
-        print(interacting_agent.id)
+        #Save current transit and satisfaction history prior to trying new transit option
+        self.transit_prev, self.satisfaction_prev = self.transit, self.satisfaction
 
+        #Only switch transit options if satisfactions is greater
+        if (interacting_agent.satisfaction > self.satisfaction):
+            self.transit = interacting_agent.transit
+            self.satifaction = -1 #Set to -1 to indicate it needs to be re-evaluated since new commute is tried
+
+    def evaluate_commute_switch(self):
+        if (self.satisfaction_prev > self.satisfaction):
+            self.transit, self.transit_prev = self.transit_prev, self.transit #swap back
         
 
 #Create Population of Agents

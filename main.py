@@ -19,14 +19,24 @@ for resident in population_list:
 
 #Step 4: Agent-Agent Monthly Interaction
 
-for neighbourhood in neighbourhood_list:
-    print(f"neighbourhood #: {neighbourhood.neighbourhood_id}")
-    for resident in neighbourhood.resident_list:
-        print(f"resident # {resident.id}")
+#4a: Compare with Random Neighbour + Switch Transit if Satisfaction is Greater
+for resident in population_list:
+    resident.monthly_neighbour_interaction(neighbourhood_list)
 
-test = population_list[0]
-print(test.id)
-test.monthly_agent_interaction(neighbourhood_list)
+def unit_test_1():
+    for neighbourhood in neighbourhood_list:
+        print(f"neighbourhood #: {neighbourhood.neighbourhood_id}")
+        for resident in neighbourhood.resident_list:
+            print(f"resident # {resident.id} took {resident.transit_prev} and now takes {resident.transit}")
+
+#5: Monthly Agent-Environment Interaction (evaluates system performance after transit changes and updates self.commutescores descriptors for each neighbourhood)
+
+
+
+#4b: Residents Re-evaluate Satisfaction Relative to Last Month's Commutes and Chooses to Stay or Revert Back to Previous Commute
+for resident in population_list:
+    resident.update_satisfaction(neighbourhood_list)
+    resident.evaluate_commute_switch()
 
 
 
