@@ -4,16 +4,32 @@ class Agent:
     def __init__(self, id, neighbourhood, transit, priorities):
         #Variables that Initiates Change
         self.id = id
-        self.neighbourhood = neighbourhood
-        self.transit = transit
-        self.satisfaction = 0 #no satisfaction when first moved in
+        self.neighbourhood = neighbourhood #0/1/2 = west/north/riverside
+        self.transit = transit #0/1/2/3 = drive/bus/bike/walks
+        self.satisfaction = 0  #no satisfaction when first moved in
         #Fixed Variables
-        self.priorities = priorities #weighted list out of 1 [sustainability, speed, convenience, affordability]
+        self.priorities = priorities #weighted list out of 1 [convenience, speed, affordability, sustainability]
         #Past/Future Variables
         self.transit_prev, self.transit_next, self.satisfaction_prev, self.satisfaction_next = 0, 0, 0, 0
         self.commutes_tried_in_curr_neighbourhood = []
 
-#test = priority_randomizer()
+    def update_transit(self, transit_type):
+        self.transit = transit_type
+
+    def update_satisfaction(self, neighbourhood_list): #metrics_list = [convenience, speed, affordability, sustainability] -> scored /10 for each category
+        metrics_list = neighbourhood_list[self.neighbourhood].commutescores[self.transit] #grabs scores for current neighbourhood and mode of transit
+        self.satisfaction = sum([a*b for a,b in zip(metrics_list, self.priorities)])
+
+    def monthly_agent_interaction(self, neighbourhood_list):
+        neighbours = neighbourhood_list[self.neighbourhood].resident_list
+
+        interacting_agent = neighbours[random.randint(0,len(neighbours)-1)]
+        while (interacting_agent.id == self.id): #Checks that we don't select ourselves to tak to 
+            interacting_agent = neighbours[random.randint(0,len(neighbours)-1)]
+
+        print(interacting_agent.id)
+
+        
 
 #Create Population of Agents
 def populate_Austin(population):
