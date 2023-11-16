@@ -3,6 +3,7 @@
 
 import agent
 import neighbourhoodclass as neighbourhood 
+import agent_env_monthly as aem
 
 
 #Step 1: Initiate Population
@@ -30,7 +31,8 @@ def unit_test_1():
             print(f"resident # {resident.id} took {resident.transit_prev} and now takes {resident.transit}")
 
 #5: Monthly Agent-Environment Interaction (evaluates system performance after transit changes and updates self.commutescores descriptors for each neighbourhood)
-
+for neighbourhood in neighbourhood_list:
+    neighbourhood.commute_scores = aem.commute_update(neighbourhood,population)
 
 
 #4b: Residents Re-evaluate Satisfaction Relative to Last Month's Commutes and Chooses to Stay or Revert Back to Previous Commute
