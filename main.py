@@ -6,6 +6,7 @@ import neighbourhoodclass as neighbourhood
 import agent_env_monthly as aem
 
 
+
 #Step 1: Initiate Population
 population = 10
 population_list = agent.populate_Austin(population)

@@ -28,6 +28,8 @@ class Neighbourhood:
 
     def define_residents(self, population):
 
+        self.resident_list = []
+
         for agent in population:
             if agent.neighbourhood == self.neighbourhood_id:
                 self.resident_list.append(agent)
@@ -82,17 +84,23 @@ class Neighbourhood:
 
 def initiate_neighbourhoods(population):
 
-    west = Neighbourhood(1200,[[7, 7, 3, 3], [5, 5, 10, 8], [4, 5, 5, 9], [3, 3, 10, 10]], 0)
+    west_scores = [[7, 7, 3, 3], [5, 5, 10, 8], [4, 5, 5, 9], [3, 3, 10, 10]]
+    north_scores = [[7, 7, 3, 3], [6, 5, 10, 8], [4, 5, 5, 9], [2, 2, 10, 10]]
+    riverside_scores = [[7, 7, 3, 3], [4, 4, 10, 8], [3, 3, 5, 9], [1, 1, 10, 10]]
 
-    north = Neighbourhood(1000, [[7, 7, 3, 3], [6, 5, 10, 8], [4, 5, 5, 9], [2, 2, 10, 10]], 1)
+    west = Neighbourhood(2,west_scores, 0)
 
-    riverside = Neighbourhood(900, [[7, 7, 3, 3], [4, 4, 10, 8], [3, 3, 5, 9], [1, 1, 10, 10]], 2)
+    north = Neighbourhood(3,north_scores, 1)
+
+    riverside = Neighbourhood(4,riverside_scores, 2)
 
     all_neighbourhoods = [west, north, riverside]
 
     for neighbourhood in all_neighbourhoods:
         neighbourhood.define_residents(population)
         neighbourhood.housing_supply = len(neighbourhood.resident_list)
+        neighbourhood.baseline_scores = neighbourhood.commutescores
+
 
     return all_neighbourhoods
 

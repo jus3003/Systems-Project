@@ -1,4 +1,4 @@
-#import numpy as np
+import numpy as np
 
 def commute_update(neighbourhood, population):
     
@@ -41,6 +41,10 @@ def commute_update(neighbourhood, population):
     neighbourhood.commutescores[3] = calculate_score(walk_ut, walk_baseline, walk_weights)
 
 def calculate_score(utilization, baseline, weights):
+
+    weights = np.array(weights)
+    baseline = np.array(baseline)
+    
 
     # exponential term for each element in the array
     exp_term = np.exp(-weights * utilization)
