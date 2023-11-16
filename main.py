@@ -22,7 +22,7 @@ for resident in population_list:
 #Step 4: Agent-Agent Monthly Interaction
 
 
-months = 40
+months = 100
 
 counts = [[],[],[]]
 
@@ -65,9 +65,9 @@ X = np.arange(0, months, 1)
 #For West Campus
 print(counts[0])
 walk = [list[3] for list in counts[0]]
-print(walk)
+#print(walk)
 
-plt.plot(X, walk, label = "west campus drive")
+plt.plot(X, walk, label = "west campus walk")
 plt.show()
 # bus = 
 # bike = 
