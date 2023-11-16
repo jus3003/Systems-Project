@@ -21,7 +21,6 @@ for resident in population_list:
 
 #Step 4: Agent-Agent Monthly Interaction
 
-
 months = 100
 
 counts = [[],[],[]] #[west campus, north campus, riverside]
@@ -56,19 +55,52 @@ for i in range(months):
         counts[neighbourhood.neighbourhood_id].append(neighbourhood.transit_counts)
 
 
-X = np.arange(0, months, 1)
+def plot_ridership():   
+    X = np.arange(0, months, 1)
+    #0/1/2 = west/north/riverside
+    location = 0 
 
-#For West Campus
-print(counts[0])
-walk = [list[3] for list in counts[0]]
-bus = [list[1] for list in counts[0]]
-bike = [list[2] for list in counts[0]]
-car = [list[0] for list in counts[0]]
+    # print(counts[location])
+    walk = [list[3] for list in counts[location]]
+    bus = [list[1] for list in counts[location]]
+    bike = [list[2] for list in counts[location]]
+    car = [list[0] for list in counts[location]]
 
-plt.plot(X, walk, label = "west campus walk")
-plt.plot(X, bus, label = "west campus bus")
-plt.plot(X, bike, label = "west campus bike")
-plt.plot(X, car, label = "west campus car")
-plt.legend()
-plt.show()
+    plt.figure("West Campus")
+    plt.plot(X, walk, label = "walk")
+    plt.plot(X, bus, label = "bus")
+    plt.plot(X, bike, label = "bike")
+    plt.plot(X, car, label = "car")
+    plt.legend()
+
+
+    location = 1 
+    walk = [list[3] for list in counts[location]]
+    bus = [list[1] for list in counts[location]]
+    bike = [list[2] for list in counts[location]]
+    car = [list[0] for list in counts[location]]
+
+    plt.figure("North Campus")
+    plt.plot(X, walk, label = "walk")
+    plt.plot(X, bus, label = "bus")
+    plt.plot(X, bike, label = "bike")
+    plt.plot(X, car, label = "car")
+    plt.legend()
+
+    location = 2 
+    walk = [list[3] for list in counts[location]]
+    bus = [list[1] for list in counts[location]]
+    bike = [list[2] for list in counts[location]]
+    car = [list[0] for list in counts[location]]
+
+    plt.figure("Riverside")
+    plt.plot(X, walk, label = "walk")
+    plt.plot(X, bus, label = "bus")
+    plt.plot(X, bike, label = "bike")
+    plt.plot(X, car, label = "car")
+    plt.legend()
+
+    plt.show()
+
+plot_ridership()
 
