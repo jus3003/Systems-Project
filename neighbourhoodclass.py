@@ -34,37 +34,8 @@ class Neighbourhood:
             if agent.neighbourhood == self.neighbourhood_id:
                 self.resident_list.append(agent)
 
-    # convenience updates on a monthly basis due to congestion
-    # track monthly utilization to define investments later
-    # pass in self.resident_list
 
-    def monthly_commuteupdate(self):
-        
-        self.monthly_utilization = [0, 0, 0, 0]
-        
-        for agent in self.resident_list:
-            
-            self.monthly_utilization[agent.transit] += 1
-            
-        # track utilization to inform annual investments
-        self.annual_utilization += self.monthly_utilization
-
-        # congestion effects
-
-        # cars: all scores effected
-        self.commutescores[0] -= self.monthly_utilization[0] * [0.05, 0.05, 0.03, 0.03]
-
-        # bus: mild impacts on convenience and speed
-        self.commutescores[1] -= self.monthly_utilization[1] * [0.02, 0.02, 0, 0]
-
-        # bike: very mild impacts on convenience
-        self.commutescores[2] -= self.monthly_utilization[2] * [0.01, 0, 0, 0]
-
-        # walk: very mild impacts on convenience
-        self.commutescores[3] -= self.monthly_utilization[3] * [0.01, 0, 0, 0]
-
-
-    # convenience and speed update on a yearly basis due to investment
+    # convenience and speed update on a yearly basis due to investment; this will actually go in a separate tab
     # city_priorities is an array for interest in investing in infrastructure for [cars, busses, bikes, pedestrians]
 
     def yearly_investment(self, city_priorities):
