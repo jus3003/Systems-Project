@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 #Step 1: Initiate Population
-population = 100
+population = 10000
 population_list = agent.populate_Austin(population)
 
 #Step 2: Initiate Neighbourhoods + Step 3: Define Commute Parameters
@@ -24,7 +24,7 @@ for resident in population_list:
 
 months = 100
 
-counts = [[],[],[]]
+counts = [[],[],[]] #[west campus, north campus, riverside]
 
 for i in range(months):
 
@@ -55,27 +55,20 @@ for i in range(months):
         #print(f"Neighbourhood #{neighbourhood.neighbourhood_id} has {neighbourhood.transit_counts}")
         counts[neighbourhood.neighbourhood_id].append(neighbourhood.transit_counts)
 
-  
-# for count in counts:
-#     print(count)
-#     print()
 
 X = np.arange(0, months, 1)
 
 #For West Campus
 print(counts[0])
 walk = [list[3] for list in counts[0]]
-#print(walk)
+bus = [list[1] for list in counts[0]]
+bike = [list[2] for list in counts[0]]
+car = [list[0] for list in counts[0]]
 
 plt.plot(X, walk, label = "west campus walk")
+plt.plot(X, bus, label = "west campus bus")
+plt.plot(X, bike, label = "west campus bike")
+plt.plot(X, car, label = "west campus car")
+plt.legend()
 plt.show()
-# bus = 
-# bike = 
-# walk = 
-
-counts = [[],[],[]]
-
-
-
-
 
