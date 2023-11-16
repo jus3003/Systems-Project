@@ -23,6 +23,8 @@ class Neighbourhood:
 
         self.annual_utilization = [0, 0, 0, 0]
 
+        self.transit_counts = [0,0,0,0]
+
     # get_residents occurs yearly to update populations
     # pass in total population of Austin
 
@@ -33,6 +35,13 @@ class Neighbourhood:
         for agent in population:
             if agent.neighbourhood == self.neighbourhood_id:
                 self.resident_list.append(agent)
+
+    def count_transit(self):
+
+        self.transit_counts = [0,0,0,0] #resets list 
+
+        for resident in self.resident_list:
+            self.transit_counts[resident.transit] += 1
 
 
     # convenience and speed update on a yearly basis due to investment; this will actually go in a separate tab
@@ -70,6 +79,7 @@ def initiate_neighbourhoods(population):
     for neighbourhood in all_neighbourhoods:
         neighbourhood.define_residents(population)
         neighbourhood.housing_supply = len(neighbourhood.resident_list)
+        neighbourhood.count_transit()
         neighbourhood.baseline_scores = neighbourhood.commutescores
 
 

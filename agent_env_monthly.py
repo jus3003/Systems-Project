@@ -51,6 +51,6 @@ def calculate_score(deltas, baseline, weights):
 
     # clip the scores
     scores = np.clip(scores, 0, 10)
-    print(scores[1])
+    #print(scores[1])
 
     return scores
