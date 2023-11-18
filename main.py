@@ -50,9 +50,10 @@ for i in range(months):
     for resident in population_list:
         resident.monthly_neighbour_interaction(neighbourhood_list)
 
-    #5: Monthly Agent-Environment Interaction (evaluates system performance after transit changes and updates self.commutescores descriptors for each neighbourhood)
+    #5: Monthly Agent-Environment Interaction (evaluates system performance after transit changes and updates self.commute_scores descriptors for each neighbourhood)
     for neighbourhood in neighbourhood_list:
-        neighbourhood.commute_scores = aem.commute_update(neighbourhood,population)
+        neighbourhood.score_history.append(neighbourhood.commutescores)
+        aem.commute_update(neighbourhood,population)
 
     #4b: Residents Re-evaluate Satisfaction Relative to Last Month's Commutes and Chooses to Stay or Revert Back to Previous Commute
     for resident in population_list:
@@ -60,7 +61,7 @@ for i in range(months):
         resident.evaluate_commute_switch()
 
     #4c: Update transit history
-    update_history()      
+    update_history()          
 
 def plot_ridership():   
     X = np.arange(0, months + 1)
@@ -110,3 +111,4 @@ def plot_ridership():
     plt.show()
 
 plot_ridership()
+

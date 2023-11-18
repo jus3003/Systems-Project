@@ -64,15 +64,19 @@ class Neighbourhood:
 
 def initiate_neighbourhoods(population):
 
-    west_scores = [[7, 7, 3, 3], [5, 5, 10, 8], [4, 5, 5, 9], [3, 3, 10, 10]]
-    north_scores = [[7, 7, 3, 3], [6, 5, 10, 8], [4, 5, 5, 9], [2, 2, 10, 10]]
-    riverside_scores = [[7, 7, 3, 3], [4, 4, 10, 8], [3, 3, 5, 9], [1, 1, 10, 10]]
+    # commute scores will be a nested list
+    # lists are for drive; bus; bike; walk
+    # list elements are convenience; speed; affordability; sustainability
 
-    west = Neighbourhood(2,west_scores, 0)
+    west_scores = [[8, 9, 2, 3], [4, 4, 10, 8], [7, 9, 8, 9], [9, 6, 10, 10]]
+    north_scores = [[9, 9, 2, 3], [7, 8, 10, 8], [9, 9, 8, 9], [8, 5, 10, 10]]
+    riverside_scores = [[7, 7, 3, 2], [7, 3, 10, 8], [4, 3, 8, 9], [1, 1, 10, 10]]
 
-    north = Neighbourhood(3,north_scores, 1)
+    west = Neighbourhood(6,west_scores, 0)
 
-    riverside = Neighbourhood(4,riverside_scores, 2)
+    north = Neighbourhood(7,north_scores, 1)
+
+    riverside = Neighbourhood(9,riverside_scores, 2)
 
     all_neighbourhoods = [west, north, riverside]
 
@@ -81,6 +85,7 @@ def initiate_neighbourhoods(population):
         neighbourhood.housing_supply = len(neighbourhood.resident_list)
         neighbourhood.count_transit()
         neighbourhood.baseline_scores = neighbourhood.commutescores
+        neighbourhood.score_history = []
 
 
     return all_neighbourhoods

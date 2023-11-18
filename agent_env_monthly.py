@@ -17,21 +17,21 @@ def commute_update(neighbourhood, population):
     # cars: all scores effected
     car_delta = neighbourhood.monthly_utilization[0] / population - 1/12
     car_baseline = neighbourhood.baseline_scores[0]
-    car_weights = [5, 5, 4, 4]
+    car_weights = [4, 5, 3, 3]
 
     neighbourhood.commutescores[0] = calculate_score(car_delta, car_baseline, car_weights)
 
     # bus: mild impacts on convenience and speed
     bus_delta = neighbourhood.monthly_utilization[1] / population - 1/12
     bus_baseline = neighbourhood.baseline_scores[1]
-    bus_weights = [3, 3, 0, 0]
+    bus_weights = [4, 3, 0, 0]
 
     neighbourhood.commutescores[1] = calculate_score(bus_delta, bus_baseline, bus_weights) 
 
     # bike: very mild impacts on convenience
     bike_delta = neighbourhood.monthly_utilization[2] / population - 1/12
     bike_baseline =neighbourhood.baseline_scores[2]
-    bike_weights = [2, 0, 0, 0]
+    bike_weights = [1, 0, 0, 0]
     neighbourhood.commutescores[2] = calculate_score(bike_delta, bike_baseline, bike_weights)
 
     # walk: very mild impacts on convenience
@@ -51,6 +51,7 @@ def calculate_score(deltas, baseline, weights):
 
     # clip the scores
     scores = np.clip(scores, 0, 10)
-    #print(scores[1])
+    
+    scores = np.array(scores).tolist()
 
     return scores
