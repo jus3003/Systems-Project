@@ -9,7 +9,7 @@ import numpy as np
 
 #Model Inputs
 population = 10000
-months = 100
+months = 500
 
 def transit_count():
     initial_transit = [0,0,0,0]
@@ -39,7 +39,6 @@ population_list = agent.populate_Austin(population)
 neighbourhood_transit_history = [[] for i in range(3)] #[west campus, north campus, riverside], records ridership for [car, bus, bike, walk] each month
 neighbourhood_score_history = [[] for i in range(3)] #[west campus, north campus, riverside], records scores for [car, bus, bike, walk] each month
 record_neighbourhood_transit_history()
-
 
 #Step 2: Initiate Neighbourhoods + Step 3: Define Commute Parameters
 neighbourhood_list = neighbourhood.initiate_neighbourhoods(population_list)
@@ -161,7 +160,7 @@ def plot_score_history(neighbourhood, commute): #("West/North/Riverside", "Drivi
     plt.legend()
     plt.show()
 
-plot_score_history("West", "Driving")
+#plot_score_history("West", "Driving")
 
 
 def plot_all_score_histories():
@@ -192,6 +191,6 @@ def plot_all_score_histories():
         for j in range(4):
             plot_score_history(i,j)
 
-plot_all_score_histories()
+#plot_all_score_histories()
 
 
