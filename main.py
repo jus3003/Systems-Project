@@ -9,7 +9,7 @@ import numpy as np
 
 #Model Inputs
 population = 10000
-months = 10
+months = 100
 
 def transit_count():
     initial_transit = [0,0,0,0]
@@ -38,11 +38,12 @@ def record_neighbourhood_score_history():
 population_list = agent.populate_Austin(population)
 neighbourhood_transit_history = [[] for i in range(3)] #[west campus, north campus, riverside], records ridership for [car, bus, bike, walk] each month
 neighbourhood_score_history = [[] for i in range(3)] #[west campus, north campus, riverside], records scores for [car, bus, bike, walk] each month
-
 record_neighbourhood_transit_history()
+
 
 #Step 2: Initiate Neighbourhoods + Step 3: Define Commute Parameters
 neighbourhood_list = neighbourhood.initiate_neighbourhoods(population_list)
+record_neighbourhood_score_history()
 
 #Step 3b: Update Initial Satisfaction of each Resident based on Initial Neighbourhood Characteristics
 for resident in population_list:
@@ -68,7 +69,7 @@ for i in range(months):
         resident.evaluate_commute_switch()
 
     #4c: Update transit history
-    record_neighbourhood_transit_history()          
+    record_neighbourhood_transit_history()         
 
 def plot_ridership():   
     X = np.arange(0, months + 1)
@@ -119,8 +120,78 @@ def plot_ridership():
 
 #plot_ridership()
 
-def plot_commute_scores():
-    pass
 
+def plot_score_history(neighbourhood, commute): #("West/North/Riverside", "Driving/Bussing/Biking/Walking")
+    X = np.arange(0, months + 1)
+
+    # neighbourhood_name = {0: "West Campus", 1: "North Campus", 2: "Riverside"}
+    # commute_name = {0: "Driving", 1: "Bussing", 2: "Biking", 3: "Walking"}
+
+    # neighbourhood_history = neighbourhood_score_history[neighbourhood]
+
+    # convenience = [list[commute][0]for list in neighbourhood_history]
+    # speed = [list[commute][1]for list in neighbourhood_history]
+    # affordability = [list[commute][2]for list in neighbourhood_history]
+    # sustainability = [list[commute][3]for list in neighbourhood_history]
+
+    # plt.figure(f"{commute_name[commute]} from {neighbourhood_name[neighbourhood]}")
+    
+    # plt.plot(X, convenience, label = "convenience")
+    # plt.plot(X, speed, label = "speed")
+    # plt.plot(X, affordability, label = "affordability")
+    # plt.plot(X, sustainability, label = "sustainability")
+    # plt.legend()
+    # plt.show()
+
+    neighbourhood_index = {"West": 0, "North": 1, "Riverside":2}
+    commute_name = {"Driving": 0, "Bussing": 1, "Biking" : 2, "Walking": 3}
+
+    neighbourhood_history = neighbourhood_score_history[neighbourhood_index[neighbourhood]] 
+
+    convenience = [list[commute_name[commute]][0]for list in neighbourhood_history]
+    speed = [list[commute_name[commute]][1]for list in neighbourhood_history]
+    affordability = [list[commute_name[commute]][2]for list in neighbourhood_history]
+    sustainability = [list[commute_name[commute]][3]for list in neighbourhood_history]
+
+    plt.figure(f"Scores for {commute} from {neighbourhood}")
+    plt.plot(X, convenience, label = "convenience")
+    plt.plot(X, speed, label = "speed")
+    plt.plot(X, affordability, label = "affordability")
+    plt.plot(X, sustainability, label = "sustainability")
+    plt.legend()
+    plt.show()
+
+plot_score_history("West", "Driving")
+
+
+def plot_all_score_histories():
+
+    def plot_score_history(neighbourhood, commute): #("West/North/Riverside", "Driving/Bussing/Biking/Walking")
+        X = np.arange(0, months + 1)
+
+        neighbourhood_name = {0: "West Campus", 1: "North Campus", 2: "Riverside"}
+        commute_name = {0: "Driving", 1: "Bussing", 2: "Biking", 3: "Walking"}
+
+        neighbourhood_history = neighbourhood_score_history[neighbourhood]
+
+        convenience = [list[commute][0]for list in neighbourhood_history]
+        speed = [list[commute][1]for list in neighbourhood_history]
+        affordability = [list[commute][2]for list in neighbourhood_history]
+        sustainability = [list[commute][3]for list in neighbourhood_history]
+
+        plt.figure(f"{commute_name[commute]} from {neighbourhood_name[neighbourhood]}")
+        
+        plt.plot(X, convenience, label = "convenience")
+        plt.plot(X, speed, label = "speed")
+        plt.plot(X, affordability, label = "affordability")
+        plt.plot(X, sustainability, label = "sustainability")
+        plt.legend()
+        plt.show()
+
+    for i in range(3):
+        for j in range(4):
+            plot_score_history(i,j)
+
+plot_all_score_histories()
 
 
