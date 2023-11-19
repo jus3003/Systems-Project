@@ -9,11 +9,7 @@ import numpy as np
 
 #Model Inputs
 population = 10000
-months = 60
-
-#Step 1: Initiate Population
-population_list = agent.populate_Austin(population)
-neighbourhood_transit_history = [[] for i in range(3)] #[west campus, north campus, riverside]
+months = 10
 
 def transit_count():
     initial_transit = [0,0,0,0]
@@ -21,24 +17,34 @@ def transit_count():
         initial_transit[agent.transit] += 1
     #print(initial_transit)
     return initial_transit
-def transit_neighbourhood_count():
-    transit_count = [[0 for i in range(4)] for i in range(3)]
-    for agent in population_list:
-        transit_count[agent.neighbourhood][agent.transit] += 1
-    #print(transit_count)
-    return transit_count
-def update_history():
+
+def record_neighbourhood_transit_history():
+    def transit_neighbourhood_count():
+        transit_count = [[0 for i in range(4)] for i in range(3)]
+        for agent in population_list:
+            transit_count[agent.neighbourhood][agent.transit] += 1
+        #print(transit_count)
+        return transit_count
     latest_count = transit_neighbourhood_count()
     for i in range(len(latest_count)):
         neighbourhood_transit_history[i].append(latest_count[i])
 
-update_history()
+def record_neighbourhood_score_history():
+    for neighbourhood in neighbourhood_list:
+        scores =  neighbourhood.commutescores.copy()
+        neighbourhood_score_history[neighbourhood.neighbourhood_id].append(scores)
+
+#Step 1: Initiate Population
+population_list = agent.populate_Austin(population)
+neighbourhood_transit_history = [[] for i in range(3)] #[west campus, north campus, riverside], records ridership for [car, bus, bike, walk] each month
+neighbourhood_score_history = [[] for i in range(3)] #[west campus, north campus, riverside], records scores for [car, bus, bike, walk] each month
+
+record_neighbourhood_transit_history()
 
 #Step 2: Initiate Neighbourhoods + Step 3: Define Commute Parameters
 neighbourhood_list = neighbourhood.initiate_neighbourhoods(population_list)
 
 #Step 3b: Update Initial Satisfaction of each Resident based on Initial Neighbourhood Characteristics
-
 for resident in population_list:
     resident.update_satisfaction(neighbourhood_list)
 
@@ -52,8 +58,9 @@ for i in range(months):
 
     #5: Monthly Agent-Environment Interaction (evaluates system performance after transit changes and updates self.commute_scores descriptors for each neighbourhood)
     for neighbourhood in neighbourhood_list:
-        neighbourhood.score_history.append(neighbourhood.commutescores)
         aem.commute_update(neighbourhood,population)
+
+    record_neighbourhood_score_history()
 
     #4b: Residents Re-evaluate Satisfaction Relative to Last Month's Commutes and Chooses to Stay or Revert Back to Previous Commute
     for resident in population_list:
@@ -61,7 +68,7 @@ for i in range(months):
         resident.evaluate_commute_switch()
 
     #4c: Update transit history
-    update_history()          
+    record_neighbourhood_transit_history()          
 
 def plot_ridership():   
     X = np.arange(0, months + 1)
@@ -110,5 +117,10 @@ def plot_ridership():
 
     plt.show()
 
-plot_ridership()
+#plot_ridership()
+
+def plot_commute_scores():
+    pass
+
+
 
