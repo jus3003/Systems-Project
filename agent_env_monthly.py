@@ -10,7 +10,7 @@ def commute_update(neighbourhood, population):
         neighbourhood.monthly_utilization[agent.transit] += 1
         
     # track utilization to inform annual investments
-    neighbourhood.annual_utilization += neighbourhood.monthly_utilization
+    neighbourhood.annual_utilization = np.array(neighbourhood.annual_utilization) + np.array(neighbourhood.monthly_utilization)
 
     # congestion effects
 
@@ -24,7 +24,7 @@ def commute_update(neighbourhood, population):
     # bus: mild impacts on convenience and speed
     bus_delta = neighbourhood.monthly_utilization[1] / population - 1/12
     bus_baseline = neighbourhood.baseline_scores[1]
-    bus_weights = [.1, .05, 0, 0]
+    bus_weights = [.05, .02, 0, 0]
 
     neighbourhood.commutescores[1] = calculate_score(bus_delta, bus_baseline, bus_weights) 
 

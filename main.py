@@ -4,12 +4,14 @@
 import agent
 import neighbourhoodclass as neighbourhood 
 import agent_env_monthly as aem
+import agent_env_annual as aea
 import matplotlib.pyplot as plt
 import numpy as np
 
 #Model Inputs
 population = 10000
-months = 500
+months = 12
+years = 4
 
 def transit_count():
     initial_transit = [0,0,0,0]
@@ -50,28 +52,42 @@ for resident in population_list:
 
 #Step 4: Agent-Agent Monthly Interaction
 
-for i in range(months):
+for j in range(years):
 
-    #4a: Compare with Random Neighbour + Switch Transit if Satisfaction is Greater
-    for resident in population_list:
-        resident.monthly_neighbour_interaction(neighbourhood_list)
+    for i in range(months):
 
-    #5: Monthly Agent-Environment Interaction (evaluates system performance after transit changes and updates self.commute_scores descriptors for each neighbourhood)
+        #4a: Compare with Random Neighbour + Switch Transit if Satisfaction is Greater
+        for resident in population_list:
+            resident.monthly_neighbour_interaction(neighbourhood_list)
+
+        #5: Monthly Agent-Environment Interaction (evaluates system performance after transit changes and updates self.commute_scores descriptors for each neighbourhood)
+        for neighbourhood in neighbourhood_list:
+            aem.commute_update(neighbourhood,population)
+
+        record_neighbourhood_score_history()
+
+        #4b: Residents Re-evaluate Satisfaction Relative to Last Month's Commutes and Chooses to Stay or Revert Back to Previous Commute
+        for resident in population_list:
+            resident.update_satisfaction(neighbourhood_list)
+            resident.evaluate_commute_switch()
+
+        #4c: Update transit history
+        record_neighbourhood_transit_history()
+
+    # investments
+
+    # priorities reflect interest in car, bus, bike, pedestrian infrastructure; should sum to 1
+    city_priorities = [0.2, 0.5, 0.2, 0.1]
+
     for neighbourhood in neighbourhood_list:
-        aem.commute_update(neighbourhood,population)
+        aea.investment_update(neighbourhood, population, city_priorities)
+    
+    # talk to neighbors, consider moving
 
-    record_neighbourhood_score_history()
 
-    #4b: Residents Re-evaluate Satisfaction Relative to Last Month's Commutes and Chooses to Stay or Revert Back to Previous Commute
-    for resident in population_list:
-        resident.update_satisfaction(neighbourhood_list)
-        resident.evaluate_commute_switch()
-
-    #4c: Update transit history
-    record_neighbourhood_transit_history()         
 
 def plot_ridership():   
-    X = np.arange(0, months + 1)
+    X = np.arange(0, months*years + 1)
 
     #0/1/2 = west/north/riverside
     location = 0 
@@ -117,11 +133,11 @@ def plot_ridership():
 
     plt.show()
 
-#plot_ridership()
+plot_ridership()
 
 
 def plot_score_history(neighbourhood, commute): #("West/North/Riverside", "Driving/Bussing/Biking/Walking")
-    X = np.arange(0, months + 1)
+    X = np.arange(0, months*years + 1)
 
     # neighbourhood_name = {0: "West Campus", 1: "North Campus", 2: "Riverside"}
     # commute_name = {0: "Driving", 1: "Bussing", 2: "Biking", 3: "Walking"}
@@ -166,7 +182,7 @@ def plot_score_history(neighbourhood, commute): #("West/North/Riverside", "Drivi
 def plot_all_score_histories():
 
     def plot_score_history(neighbourhood, commute): #("West/North/Riverside", "Driving/Bussing/Biking/Walking")
-        X = np.arange(0, months + 1)
+        X = np.arange(0, months*years + 1)
 
         neighbourhood_name = {0: "West Campus", 1: "North Campus", 2: "Riverside"}
         commute_name = {0: "Driving", 1: "Bussing", 2: "Biking", 3: "Walking"}
@@ -191,6 +207,6 @@ def plot_all_score_histories():
         for j in range(4):
             plot_score_history(i,j)
 
-#plot_all_score_histories()
+plot_all_score_histories()
 
 

@@ -68,9 +68,9 @@ def initiate_neighbourhoods(population):
     # lists are for drive; bus; bike; walk
     # list elements are convenience; speed; affordability; sustainability
 
-    west_scores = [[8, 9, 2, 3], [4, 4, 10, 8], [7, 9, 8, 9], [9, 6, 10, 10]]
+    west_scores = [[8, 9, 2, 3], [5, 5, 10, 8], [7, 9, 7, 9], [8, 6, 10, 10]]
     north_scores = [[9, 9, 2, 3], [7, 8, 10, 8], [9, 9, 8, 9], [8, 5, 10, 10]]
-    riverside_scores = [[7, 7, 3, 2], [7, 3, 10, 8], [4, 3, 8, 9], [1, 1, 10, 10]]
+    riverside_scores = [[8, 7, 2, 2], [7, 3, 10, 7], [4, 3, 8, 9], [1, 1, 10, 10]]
 
     west = Neighbourhood(6,west_scores, 0)
 
