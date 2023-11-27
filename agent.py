@@ -13,13 +13,17 @@ class Agent:
         self.transit_prev, self.transit_next, self.satisfaction_prev, self.satisfaction_next = -1, -1, -1, -1
         self.testing_commute_option = False
         self.commutes_tried_in_curr_neighbourhood = []
+        self.neighbourhood_change_threshold = 0.2
+        self.neighbourhood_prev_annual, self.neighbourhood_satisfaction_prev_annual, self.transit_prev_annual = 0, 0, 0
 
     def update_transit(self, transit_type):
         self.transit = transit_type
 
     def update_satisfaction(self, neighbourhood_list): #metrics_list = [convenience, speed, affordability, sustainability] -> scored /10 for each category
-        metrics_list = neighbourhood_list[self.neighbourhood].commutescores[self.transit] #grabs scores for current neighbourhood and mode of transit
-        self.satisfaction = sum([a*b for a,b in zip(metrics_list, self.priorities)])
+        neighbourhood = neighbourhood_list[self.neighbourhood]
+        metrics_list = neighbourhood.commutescores[self.transit] #grabs commute scores for current neighbourhood and mode of transit
+        metrics_list[2] = 0.2*metrics_list[2] + 0.8*neighbourhood.rent #factor rental costs into affordability score
+        self.satisfaction = sum([a*b for a,b in zip(metrics_list, self.priorities)]) #calculates satisfaction
 
     def monthly_neighbour_interaction(self, neighbourhood_list):
         neighbours = neighbourhood_list[self.neighbourhood].resident_list
@@ -34,12 +38,41 @@ class Agent:
         #Only switch transit options if satisfactions is greater
         if (interacting_agent.satisfaction > self.satisfaction):
             self.transit = interacting_agent.transit
-            self.satifaction = -1 #Set to -1 to indicate it needs to be re-evaluated since new commute is tried
+            self.satisfaction = -1 #Set to -1 to indicate it needs to be re-evaluated since new commute is tried
 
     def evaluate_commute_switch(self):
         if (self.satisfaction_prev > self.satisfaction):
             self.transit, self.transit_prev = self.transit_prev, self.transit #swap back
         
+    def annual_neighbour_interaction(self, population_list):
+        interacting_agent = population_list[random.randint(0,len(population_list))]
+
+        if (interacting_agent.neighbourhood == self.neighbourhood): #if same neighbourhood, no change
+            return
+
+        if (interacting_agent.satisfaction < (1+self.neighbourhood_change_threshold)*(self.satisfaction)): #if satisfaction less than required satisfaction bump to move neighbourhoods, no change
+            return
+        
+        if (interacting_agent.satisfaction < self.neighbourhood_satisfaction_prev_annual): #if recommendation worse than previous years neighbourhood/transit combo, switch back to old combo
+            #record current neighbourhood/transit/satisfaction as previous years
+            #update current neighbourhood/transit/satisfaction to current years
+            pass
+        else: #change to neighbours recomendation
+            pass
+
+
+        # if (self.neighbourhood_satisfaction_prev > interacting_agent.satisfaction): #if satisfaction in previous neighbourhood is greater than neighbours satisfaction, go back to previous neighbourhood/transit setup
+        #     self.neighbourhood = self.neighbourhood_prev
+        #     self.transit, self.transit_prev = 
+        # else:
+        #     self.neihgbourhood, self.transit = 
+
+        # self.neighbourhood_prev, self.neighbourhood_satisfaction_prev = self.neighbourhood, self.satisfaction
+        
+
+        
+            
+            
 
 #Create Population of Agents
 def populate_Austin(population):

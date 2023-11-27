@@ -54,6 +54,7 @@ for resident in population_list:
 
 for j in range(years):
 
+    #Monthly Changes
     for i in range(months):
 
         #4a: Compare with Random Neighbour + Switch Transit if Satisfaction is Greater
@@ -74,15 +75,18 @@ for j in range(years):
         #4c: Update transit history
         record_neighbourhood_transit_history()
 
-    # investments
+    # Annual Changes
 
-    # priorities reflect interest in car, bus, bike, pedestrian infrastructure; should sum to 1
-    city_priorities = [0.2, 0.5, 0.2, 0.1]
+    # 1. City Investments
+    city_priorities = [0.2, 0.5, 0.2, 0.1]  #priorities reflect interest in car, bus, bike, pedestrian infrastructure; should sum to 1
 
     for neighbourhood in neighbourhood_list:
         aea.investment_update(neighbourhood, population, city_priorities)
     
-    # talk to neighbors, consider moving
+    # 2. Annual Agent-Agent Interaction, Consider Moving Neighourhoods
+
+    for resident in population_list:
+        pass
 
 
 
@@ -133,7 +137,7 @@ def plot_ridership():
 
     plt.show()
 
-plot_ridership()
+#plot_ridership()
 
 
 def plot_score_history(neighbourhood, commute): #("West/North/Riverside", "Driving/Bussing/Biking/Walking")
@@ -207,6 +211,6 @@ def plot_all_score_histories():
         for j in range(4):
             plot_score_history(i,j)
 
-plot_all_score_histories()
+#plot_all_score_histories()
 
 
