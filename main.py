@@ -5,13 +5,14 @@ import agent
 import neighbourhoodclass as neighbourhood 
 import agent_env_monthly as aem
 import agent_env_annual as aea
+import test as unit
 import matplotlib.pyplot as plt
 import numpy as np
 
 #Model Inputs
 population = 10000
-months = 12
-years = 4
+months_per_year = 12
+years = 5
 
 def transit_count():
     initial_transit = [0,0,0,0]
@@ -50,12 +51,13 @@ record_neighbourhood_score_history()
 for resident in population_list:
     resident.update_satisfaction(neighbourhood_list)
 
+
 #Step 4: Agent-Agent Monthly Interaction
 
 for j in range(years):
 
     #Monthly Changes
-    for i in range(months):
+    for i in range(months_per_year):
 
         #4a: Compare with Random Neighbour + Switch Transit if Satisfaction is Greater
         for resident in population_list:
@@ -74,7 +76,7 @@ for j in range(years):
 
         #4c: Update transit history
         record_neighbourhood_transit_history()
-
+  
     # Annual Changes
 
     # 1. City Investments
@@ -82,16 +84,30 @@ for j in range(years):
 
     for neighbourhood in neighbourhood_list:
         aea.investment_update(neighbourhood, population, city_priorities)
-    
-    # 2. Annual Agent-Agent Interaction, Consider Moving Neighourhoods
+
+    # 2. Rent Prices Systems Dynamics Update
+
+    # 3. Residents Update Satisfaction based on City Investments and New Rent Prices
 
     for resident in population_list:
-        pass
+        resident.update_satisfaction(neighbourhood_list)
+    
+    # 4. Annual Agent-Agent Interaction, Consider Moving Neighourhoods
 
+    for resident in population_list:
+        resident.annual_neighbour_interaction(population_list)
+        resident.update_satisfaction(neighbourhood_list)
+
+    # 5. Update neighbourhood resident lists for the new year
+
+    for neighbourhood in neighbourhood_list:
+        neighbourhood.define_residents(population_list)
+
+    #unit.test_1(neighbourhood_list)
 
 
 def plot_ridership():   
-    X = np.arange(0, months*years + 1)
+    X = np.arange(0, months_per_year*years + 1)
 
     #0/1/2 = west/north/riverside
     location = 0 
@@ -141,7 +157,7 @@ def plot_ridership():
 
 
 def plot_score_history(neighbourhood, commute): #("West/North/Riverside", "Driving/Bussing/Biking/Walking")
-    X = np.arange(0, months*years + 1)
+    X = np.arange(0, months_per_year*years + 1)
 
     # neighbourhood_name = {0: "West Campus", 1: "North Campus", 2: "Riverside"}
     # commute_name = {0: "Driving", 1: "Bussing", 2: "Biking", 3: "Walking"}
@@ -186,7 +202,7 @@ def plot_score_history(neighbourhood, commute): #("West/North/Riverside", "Drivi
 def plot_all_score_histories():
 
     def plot_score_history(neighbourhood, commute): #("West/North/Riverside", "Driving/Bussing/Biking/Walking")
-        X = np.arange(0, months*years + 1)
+        X = np.arange(0, months_per_year*years + 1)
 
         neighbourhood_name = {0: "West Campus", 1: "North Campus", 2: "Riverside"}
         commute_name = {0: "Driving", 1: "Bussing", 2: "Biking", 3: "Walking"}
