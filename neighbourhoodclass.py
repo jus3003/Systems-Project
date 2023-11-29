@@ -3,6 +3,7 @@
 
 # In[1]:
 
+import numpy as np
 
 class Neighbourhood:
 
@@ -53,11 +54,20 @@ class Neighbourhood:
             self.commutescores[i][0] = self.commutescores[i][0] + self.annual_utilization[i] * city_priorities[i] / 100
             self.commutescores[i][1] = self.commutescores[i][1] + self.annual_utilization[i] * city_priorities[i] / 100
 
+    def supply_demand(self):
+
+        # update rent as f(supply, demand); don't let this change by >20% / year
+        self.rent *= np.clip((len(self.resident_list) / self.housing_supply)**0.1,0.8,1.2)
+
+        # more gradually update supply according to change in demand; don't let this change by >5% / year (and it won't matter until next year)
+        self.housing_supply *= np.clip((len(self.resident_list) / self.housing_supply)**0.01, 0.95, 1.05)
+
 
 # In[2]:
 
 
-# Define neighbourhoods (this may go in main)
+# Define neighbourhoods 
+
 # scores out of 10: drive, bus, bike, walk; convenience, speed, affordability, sustainability
 
 # using population = populate_Austin(n)
@@ -86,14 +96,7 @@ def initiate_neighbourhoods(population):
         neighbourhood.count_transit()
         neighbourhood.baseline_scores = neighbourhood.commutescores
         neighbourhood.score_history = []
+        neighbourhood.housing_history = []
 
 
     return all_neighbourhoods
-
-
-
-# In[3]:
-
-
-
-

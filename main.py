@@ -87,6 +87,9 @@ for j in range(years):
 
     # 2. Rent Prices Systems Dynamics Update
 
+    for neighbourhood in neighbourhood_list:
+        neighbourhood.supply_demand()
+
     # 3. Residents Update Satisfaction based on City Investments and New Rent Prices
 
     for resident in population_list:
@@ -228,5 +231,3 @@ def plot_all_score_histories():
             plot_score_history(i,j)
 
 #plot_all_score_histories()
-
-
