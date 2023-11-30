@@ -121,9 +121,7 @@ class Agent:
 
 #Create Population of Agents
 
-
-
-def populate_Austin(population, rent_percent_priority, satisfaction_bump_to_move): #Includes Agent Profiles
+def populate_Austin(population, rent_percent_priority, satisfaction_bump_to_move, student_types_percent, student_priority_profiles): #Includes Agent Profiles
 
     #Randomize Priorities of Agents
     def priority_randomizer(approx_priorities):
@@ -145,29 +143,29 @@ def populate_Austin(population, rent_percent_priority, satisfaction_bump_to_move
     population_list = []
 
     # Synthetic population: 10% sustainability oriented; 60% convenience/cost oriented; 30% cost critical
-    sus_pop = int(0.1 * population)
-    conv_pop = int(0.6 * population)
-    cost_pop = population - sus_pop - conv_pop
+    sus_pop = int(student_types_percent[0] * population)
+    conv_pop = int(student_types_percent[1] * population)
+    cost_pop = int(student_types_percent[2] * population)
 
 
     for i in range(0,sus_pop):
         assign_neighbourhood = random.randint(0,2) 
         assign_transit = random.randint(0,3) #0/1/2/3 = drive/bus/bike/walk)
-        assign_priorities = priority_randomizer([0.2,0.2,0.2,0.4]) #20% speed, 20% convenience, 20% affordability, 40% sustainability
+        assign_priorities = priority_randomizer(student_priority_profiles[0]) #% speed, % convenience, % affordability, % sustainability
         population_list.append(Agent(id = i, neighbourhood = assign_neighbourhood, transit = assign_transit, priorities = assign_priorities, rent_percent_priority = rent_percent_priority, satisfaction_bump_to_move = satisfaction_bump_to_move))
         #print(assign_neighbourhood, assign_priorities, assign_transit)
 
     for i in range(0,conv_pop):
         assign_neighbourhood = random.randint(0,2) 
         assign_transit = random.randint(0,3) #0/1/2/3 = drive/bus/bike/walk)
-        assign_priorities = priority_randomizer([0.2,0.3,0.4,0.1]) #20% speed, 30% convenience, 40% affordability, 10% sustainability
+        assign_priorities = priority_randomizer(student_priority_profiles[1]) #% speed, % convenience, % affordability, % sustainability
         population_list.append(Agent(id = i, neighbourhood = assign_neighbourhood, transit = assign_transit, priorities = assign_priorities, rent_percent_priority = rent_percent_priority, satisfaction_bump_to_move = satisfaction_bump_to_move))
         #print(assign_neighbourhood, assign_priorities, assign_transit)
 
     for i in range(0, cost_pop):
         assign_neighbourhood = random.randint(0,2) 
         assign_transit = random.randint(0,3) #0/1/2/3 = drive/bus/bike/walk)
-        assign_priorities = priority_randomizer([0.1,0.1,0.7,0.1]) #10% speed, 10% convenience, 70% affordability, 10% sustainability
+        assign_priorities = priority_randomizer(student_priority_profiles[2]) #% speed, % convenience, % affordability, % sustainability
         population_list.append(Agent(id = i, neighbourhood = assign_neighbourhood, transit = assign_transit, priorities = assign_priorities, rent_percent_priority = rent_percent_priority, satisfaction_bump_to_move = satisfaction_bump_to_move))
         #print(assign_neighbourhood, assign_priorities, assign_transit)
 

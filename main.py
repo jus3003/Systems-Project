@@ -151,15 +151,20 @@ def plot_all_score_histories():
         for j in range(4):
             plot_score_history(i,j)
 
-
 #Tunable Model Inputs
-population = 10000
-years = 5
+population = 10000 #How big is the total student population?
+years = 5 #How many years do we run the model?
 
 #Agent Model Inputs
-rent_percent_priority = 0.8 #How much % does rent cost affect overall affordability
-satisfaction_bump_to_move = 0.02 #How much % increase in satisfaction does a student need to move neighbourhoods 
+rent_percent_priority = 0.8 #How much % does rent cost affect overall affordability?
+satisfaction_bump_to_move = 0.2 #How much % increase in satisfaction does a student need to move neighbourhoods? 
 
+student_types = ["Sustainability Oriented", "Convenience/Cost Oriented", "Cost Critical"] #What are the classification of student types?
+student_types_percent = [0.1, 0.6, 0.3] #What percentage of total population is each student type?
+
+sustainability_priorities = [0.2,0.2,0.2,0.4] #What percentages of [speed, convenience, affordability, sustainability] does this student value?
+convenience_cost_priorities = [0.2,0.3,0.4,0.1] #[speed, convenience, affordability, sustainability] 
+cost_critical_priorities = [0.1,0.1,0.7,0.1] #[speed, convenience, affordability, sustainability]
 
 #Other
 city_priorities = [0.2, 0.5, 0.2, 0.1]  #priorities reflect interest in car, bus, bike, pedestrian infrastructure; should sum to 4
@@ -167,9 +172,14 @@ city_priorities = [0.2, 0.5, 0.2, 0.1]  #priorities reflect interest in car, bus
 
 #Fixed Model Inputs
 months_per_year = 12
+student_priority_profiles = [sustainability_priorities, convenience_cost_priorities, cost_critical_priorities]
+
+#----------------------------------------------------------------------------------
+
+#Model
 
 #Step 1: Initiate Population
-population_list = agent.populate_Austin(population, rent_percent_priority)
+population_list = agent.populate_Austin(population, rent_percent_priority, satisfaction_bump_to_move, student_types_percent, student_priority_profiles)
 neighbourhood_transit_history = [[] for i in range(3)] #[west campus, north campus, riverside], records ridership for [car, bus, bike, walk] each month
 neighbourhood_score_history = [[] for i in range(3)] #[west campus, north campus, riverside], records scores for [car, bus, bike, walk] each month
 record_neighbourhood_transit_history()
@@ -186,40 +196,38 @@ for resident in population_list:
 for year in range(years):
 
     #1. Monthly Changes
-    def monthly_changes():
-        for month in range(months_per_year):
+    for month in range(months_per_year):
 
-            #I: Compare with Random Neighbour + Switch Transit if Satisfaction is Greater
-            for resident in population_list:
-                resident.monthly_neighbour_interaction(neighbourhood_list)
+        #I: Compare with Random Neighbour + Switch Transit if Satisfaction is Greater
+        for resident in population_list:
+            resident.monthly_neighbour_interaction(neighbourhood_list)
 
-            #II: Monthly Agent-Environment Interaction (evaluates system performance after transit changes and updates self.commute_scores descriptors for each neighbourhood)
-            for neighbourhood in neighbourhood_list:
-                aem.commute_update(neighbourhood,population)
+        #II: Monthly Agent-Environment Interaction (evaluates system performance after transit changes and updates self.commute_scores descriptors for each neighbourhood)
+        for neighbourhood in neighbourhood_list:
+            aem.commute_update(neighbourhood,population)
 
-            record_neighbourhood_score_history()
+        record_neighbourhood_score_history()
 
-            #III: Residents Re-evaluate Satisfaction Relative to Last Month's Commutes and Chooses to Stay or Revert Back to Previous Commute
-            for resident in population_list:
-                resident.update_satisfaction(neighbourhood_list)
-                resident.evaluate_commute_switch()
+        #III: Residents Re-evaluate Satisfaction Relative to Last Month's Commutes and Chooses to Stay or Revert Back to Previous Commute
+        for resident in population_list:
+            resident.update_satisfaction(neighbourhood_list)
+            resident.evaluate_commute_switch()
 
-            #IV: Update transit history
-            record_neighbourhood_transit_history()
+        #IV: Update transit history
+        record_neighbourhood_transit_history()
   
-    monthly_changes()
 
     #2. Annual Changes
 
-    # I. City Investments
+    # # I. City Investments
 
-    for neighbourhood in neighbourhood_list:
-        aea.investment_update(neighbourhood, population, city_priorities)
+    # for neighbourhood in neighbourhood_list:
+    #     aea.investment_update(neighbourhood, population, city_priorities)
 
-    # II. Rent Prices Systems Dynamics Update
+    # # II. Rent Prices Systems Dynamics Update
 
-    for neighbourhood in neighbourhood_list:
-        neighbourhood.supply_demand()
+    # for neighbourhood in neighbourhood_list:
+    #     neighbourhood.supply_demand()
 
     # III. Residents Update Satisfaction based on City Investments and New Rent Prices
 
