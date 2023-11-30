@@ -156,13 +156,20 @@ def plot_all_score_histories():
 population = 10000
 years = 5
 
+#Agent Model Inputs
+rent_percent_priority = 0.8 #How much % does rent cost affect overall affordability
+satisfaction_bump_to_move = 0.02 #How much % increase in satisfaction does a student need to move neighbourhoods 
+
+
+#Other
+city_priorities = [0.2, 0.5, 0.2, 0.1]  #priorities reflect interest in car, bus, bike, pedestrian infrastructure; should sum to 4
+
 
 #Fixed Model Inputs
 months_per_year = 12
 
-
 #Step 1: Initiate Population
-population_list = agent.populate_Austin(population)
+population_list = agent.populate_Austin(population, rent_percent_priority)
 neighbourhood_transit_history = [[] for i in range(3)] #[west campus, north campus, riverside], records ridership for [car, bus, bike, walk] each month
 neighbourhood_score_history = [[] for i in range(3)] #[west campus, north campus, riverside], records scores for [car, bus, bike, walk] each month
 record_neighbourhood_transit_history()
@@ -205,7 +212,6 @@ for year in range(years):
     #2. Annual Changes
 
     # I. City Investments
-    city_priorities = [0.2, 0.5, 0.2, 0.1]  #priorities reflect interest in car, bus, bike, pedestrian infrastructure; should sum to 4
 
     for neighbourhood in neighbourhood_list:
         aea.investment_update(neighbourhood, population, city_priorities)
@@ -238,4 +244,4 @@ for year in range(years):
 
 plot_ridership()
 #plot_score_history("West", "Driving")
-plot_all_score_histories()
+#plot_all_score_histories()
