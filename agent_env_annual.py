@@ -28,6 +28,8 @@ def calc_investment(baseline, delta, priority):
     #print(baseline)
     #print(delta)
     #print(investment)
+
+    # convenience, speed, affordability, sustainability
     
     new_score = baseline + np.ones(4) * investment
     clip_score = np.clip(new_score, 0, 10)

@@ -146,6 +146,56 @@ def populate_Austin(population):
 
     return population_list
 
+# def populate_Austin(population):
+
+#     #Randomize Priorities of Agents
+#     def priority_randomizer(approx_priorities):
+#         priorities = []
+#         sum = 0
+        
+#         for i in range(4):
+#             # priorities are approximated as an input, but drawn from a distribution around +/- 20% of the approximation
+#             num = random.uniform(approx_priorities[i]*0.8,approx_priorities[i]*1.2)
+#             priorities.append(num)
+#             sum += num
+#         for i in range(len(priorities)):
+#             priorities[i] /= sum
+
+#         #print("[speed, convenience, affordability, sustainability] = ", priorities)
+#         return priorities #[speed, convenience, affordability, sustainability]
+
+#     # Create Population List
+#     population_list = []
+
+#     # Synthetic population: 10% sustainability oriented; 60% convenience/cost oriented; 30% cost critical
+#     sus_pop = int(0.1 * population)
+#     conv_pop = int(0.6 * population)
+#     cost_pop = population - sus_pop - conv_pop
+
+
+#     for i in range(0,sus_pop):
+#         assign_neighbourhood = random.randint(0,2) 
+#         assign_transit = random.randint(0,3) #0/1/2/3 = drive/bus/bike/walk)
+#         assign_priorities = priority_randomizer([0.2,0.2,0.2,0.4]) #20% speed, 20% convenience, 20% affordability, 40% sustainability
+#         population_list.append(Agent(id = i, neighbourhood = assign_neighbourhood, transit = assign_transit, priorities = assign_priorities))
+#         #print(assign_neighbourhood, assign_priorities, assign_transit)
+
+#     for i in range(0,conv_pop):
+#         assign_neighbourhood = random.randint(0,2) 
+#         assign_transit = random.randint(0,3) #0/1/2/3 = drive/bus/bike/walk)
+#         assign_priorities = priority_randomizer([0.2,0.3,0.4,0.1]) #20% speed, 30% convenience, 40% affordability, 10% sustainability
+#         population_list.append(Agent(id = i, neighbourhood = assign_neighbourhood, transit = assign_transit, priorities = assign_priorities))
+#         #print(assign_neighbourhood, assign_priorities, assign_transit)
+
+#     for i in range(0, cost_pop):
+#         assign_neighbourhood = random.randint(0,2) 
+#         assign_transit = random.randint(0,3) #0/1/2/3 = drive/bus/bike/walk)
+#         assign_priorities = priority_randomizer([0.1,0.1,0.7,0.1]) #10% speed, 10% convenience, 70% affordability, 10% sustainability
+#         population_list.append(Agent(id = i, neighbourhood = assign_neighbourhood, transit = assign_transit, priorities = assign_priorities))
+#         #print(assign_neighbourhood, assign_priorities, assign_transit)
+
+#     return population_list
+
 #population_list = populate_Austin(20)
 
 

@@ -80,7 +80,7 @@ for j in range(years):
     # Annual Changes
 
     # 1. City Investments
-    city_priorities = [0.2, 0.5, 0.2, 0.1]  #priorities reflect interest in car, bus, bike, pedestrian infrastructure; should sum to 1
+    city_priorities = [0.2, 0.5, 0.2, 0.1]  #priorities reflect interest in car, bus, bike, pedestrian infrastructure; should sum to 4
 
     for neighbourhood in neighbourhood_list:
         aea.investment_update(neighbourhood, population, city_priorities)
@@ -156,7 +156,7 @@ def plot_ridership():
 
     plt.show()
 
-#plot_ridership()
+plot_ridership()
 
 
 def plot_score_history(neighbourhood, commute): #("West/North/Riverside", "Driving/Bussing/Biking/Walking")
@@ -230,4 +230,8 @@ def plot_all_score_histories():
         for j in range(4):
             plot_score_history(i,j)
 
-#plot_all_score_histories()
+plot_all_score_histories()
+
+# things to plot:
+# drivers vs bikers in different scenarios; how government priorities influence this
+# tracking rent prices
