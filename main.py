@@ -6,6 +6,8 @@ import neighbourhoodclass as neighbourhood
 import agent_env_monthly as aem
 import agent_env_annual as aea
 import test as unit
+
+#Packages Needed
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -50,7 +52,6 @@ record_neighbourhood_score_history()
 #Step 3b: Update Initial Satisfaction of each Resident based on Initial Neighbourhood Characteristics
 for resident in population_list:
     resident.update_satisfaction(neighbourhood_list)
-
 
 #Step 4: Agent-Agent Monthly Interaction
 
@@ -109,7 +110,7 @@ for j in range(years):
     #unit.test_1(neighbourhood_list)
 
 
-def plot_ridership():   
+def plot_ridership(): 
     X = np.arange(0, months_per_year*years + 1)
 
     #0/1/2 = west/north/riverside
@@ -156,8 +157,7 @@ def plot_ridership():
 
     plt.show()
 
-plot_ridership()
-
+#plot_ridership()
 
 def plot_score_history(neighbourhood, commute): #("West/North/Riverside", "Driving/Bussing/Biking/Walking")
     X = np.arange(0, months_per_year*years + 1)
@@ -201,7 +201,6 @@ def plot_score_history(neighbourhood, commute): #("West/North/Riverside", "Drivi
 
 #plot_score_history("West", "Driving")
 
-
 def plot_all_score_histories():
 
     def plot_score_history(neighbourhood, commute): #("West/North/Riverside", "Driving/Bussing/Biking/Walking")
@@ -230,8 +229,4 @@ def plot_all_score_histories():
         for j in range(4):
             plot_score_history(i,j)
 
-plot_all_score_histories()
-
-# things to plot:
-# drivers vs bikers in different scenarios; how government priorities influence this
-# tracking rent prices
+#plot_all_score_histories()
