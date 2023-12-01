@@ -21,6 +21,7 @@ def investment_update(neighbourhood, population, all_priorities):
 def calc_investment(baseline, delta, priorities):
 
     #priorities reflect interest in investing in the convenience, speed, affordability, and sustainability of car, bus, bike, pedestrian infrastructure; should sum to 4
+    #city_priorities = [[0.3, 0.3, 0.2, 0.2],[0.2, 0.5, 0.2, 0.1],[0.5, 0.4, 0.1, 0],[0.7, 0.3, 0, 0]]  
 
     if delta > 0:
         investment = delta * np.array(priorities) / 50
