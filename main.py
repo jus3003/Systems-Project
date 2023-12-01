@@ -2,7 +2,7 @@
 # scores out of 10: drive, bus, bike, walk; convenience, speed, affordability, sustainability
 
 import agent
-import neighbourhoodclass as neighbourhood 
+import neighbourhood
 import agent_env_monthly as aem
 import agent_env_annual as aea
 import test as unit
@@ -19,7 +19,7 @@ neighbourhood_score_history = [[] for i in range(3)] #[west campus, north campus
 #------------------------------------------------------------------------------------------------------------------------------------------------
 
 #Tunable Model Inputs
-population = 50000 #How big is the total student population?
+population = 5000 #How big is the total student population?
 years = 5 #How many years do we run the model?
 periods_per_year = 52
 
