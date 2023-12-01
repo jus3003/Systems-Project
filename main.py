@@ -175,8 +175,8 @@ cost_critical_priorities = [0.1,0.1,0.7,0.1] #[speed, convenience, affordability
 
 
 
-#Other
-city_priorities = [0.2, 0.5, 0.2, 0.1]  #priorities reflect interest in car, bus, bike, pedestrian infrastructure; should sum to 4
+#priorities reflect interest in investing in the convenience, speed, affordability, and sustainability of car, bus, bike, pedestrian infrastructure; should sum to 4
+city_priorities = [[0.3, 0.3, 0.2, 0.2],[0.2, 0.5, 0.2, 0.1],[0.5, 0.4, 0.1, 0],[0.7, 0.3, 0, 0]]  
 
 
 #Fixed Model Inputs
