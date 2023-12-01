@@ -229,13 +229,13 @@ for year in range(years):
 
     # # I. City Investments
 
-    # for neighbourhood in neighbourhood_list:
-    #     aea.investment_update(neighbourhood, population, city_priorities)
+    for neighbourhood in neighbourhood_list:
+        aea.investment_update(neighbourhood, population, city_priorities)
 
     # # II. Rent Prices Systems Dynamics Update
 
-    # for neighbourhood in neighbourhood_list:
-    #     neighbourhood.supply_demand()
+    for neighbourhood in neighbourhood_list:
+        neighbourhood.supply_demand()
 
     # III. Residents Update Satisfaction based on City Investments and New Rent Prices
 

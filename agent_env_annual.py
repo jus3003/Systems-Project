@@ -16,6 +16,8 @@ def investment_update(neighbourhood, population, priorities):
 
         # return annual utilization to 0 for future accounting
         neighbourhood.annual_utilization[i] = 0
+
+    # print(annual_deltas)
     
 def calc_investment(baseline, delta, priority):
 
