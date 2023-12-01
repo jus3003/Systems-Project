@@ -19,8 +19,9 @@ neighbourhood_score_history = [[] for i in range(3)] #[west campus, north campus
 #------------------------------------------------------------------------------------------------------------------------------------------------
 
 #Tunable Model Inputs
-population = 10000 #How big is the total student population?
+population = 50000 #How big is the total student population?
 years = 5 #How many years do we run the model?
+periods_per_year = 52
 
 #Agent Model Inputs
 rent_percent_priority = 0.8 #How much % does rent cost affect overall affordability (rent + commute costs)?
@@ -35,13 +36,12 @@ cost_critical_priorities = [0.1,0.1,0.7,0.1] #[speed, convenience, affordability
 
 #Monthly Interaction Inputs
 
-
 #priorities reflect interest in investing in the convenience, speed, affordability, and sustainability of car, bus, bike, pedestrian infrastructure; should sum to 4
 city_priorities = [[0.1, 0.1, 0, 0],[0.3, 0.5, 0.2, 0.1],[0.3, 0.3, 0.1, 0],[0.3, 0.3, 0, 0]]  
 city_priorities = city_priorities / np.sum(city_priorities)
 
 #Fixed Model Inputs
-months_per_year = 52
+months_per_year = periods_per_year
 student_priority_profiles = [sustainability_priorities, convenience_cost_priorities, cost_critical_priorities]
 transit_weights_monthly_update = []
 
