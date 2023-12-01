@@ -24,10 +24,10 @@ years = 5 #How many years do we run the model?
 
 #Agent Model Inputs
 rent_percent_priority = 0.8 #How much % does rent cost affect overall affordability (rent + commute costs)?
-satisfaction_bump_to_move = 0.1 #How much % increase in satisfaction does a student need to move neighbourhoods? 
+satisfaction_bump_to_move = 0.2 #How much % increase in satisfaction does a student need to move neighbourhoods? 
 
 student_types = ["Sustainability Oriented", "Convenience/Cost Oriented", "Cost Critical"] #What are the classification of student types?
-student_types_percent = [0.1, 0.45, 0.45] #What percentage of total population is each student type?
+student_types_percent = [0.1, 0.6, 0.3] #What percentage of total population is each student type?
 
 sustainability_priorities = [0.2,0.2,0.2,0.4] #What percentages of [speed, convenience, affordability, sustainability] does this student value?
 convenience_cost_priorities = [0.2,0.3,0.4,0.1] #[speed, convenience, affordability, sustainability] 
@@ -37,11 +37,11 @@ cost_critical_priorities = [0.1,0.1,0.7,0.1] #[speed, convenience, affordability
 
 
 #priorities reflect interest in investing in the convenience, speed, affordability, and sustainability of car, bus, bike, pedestrian infrastructure; should sum to 4
-#city_priorities = [[0.3, 0.3, 0.2, 0.2],[0.2, 0.5, 0.2, 0.1],[0.5, 0.4, 0.1, 0],[0.7, 0.3, 0, 0]]  
-city_priorities = [0.3, 0.3, 0.2, 0.2]
+city_priorities = [[0.1, 0.1, 0, 0],[0.3, 0.5, 0.2, 0.1],[0.3, 0.3, 0.1, 0],[0.3, 0.3, 0, 0]]  
+city_priorities = city_priorities / np.sum(city_priorities)
 
 #Fixed Model Inputs
-months_per_year = 12
+months_per_year = 52
 student_priority_profiles = [sustainability_priorities, convenience_cost_priorities, cost_critical_priorities]
 transit_weights_monthly_update = []
 
@@ -119,5 +119,5 @@ for year in range(years):
 #Plot Checks
 
 plot.plot_ridership(months_per_year, years, neighbourhood_transit_history)
-plot.plot_score_history("West", "Driving", months_per_year, years, neighbourhood_score_history)
-plot.plot_all_score_histories(months_per_year, years, neighbourhood_score_history)
+#plot.plot_score_history("West", "Driving", months_per_year, years, neighbourhood_score_history)
+#plot.plot_all_score_histories(months_per_year, years, neighbourhood_score_history)

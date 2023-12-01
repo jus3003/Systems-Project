@@ -9,8 +9,7 @@ def investment_update(neighbourhood, population, all_priorities):
     for i in range(4):
 
         # measure relative use
-        # Why * 12?
-        annual_deltas[i] = (neighbourhood.annual_utilization[i] / population) * 12 - 1/12
+        annual_deltas[i] = (neighbourhood.annual_utilization[i] / population) - 1/12
 
         # make investments to baseline scores
         neighbourhood.baseline_scores[i] = calc_investment(neighbourhood.baseline_scores[i], annual_deltas[i], all_priorities[i])
@@ -24,10 +23,10 @@ def calc_investment(baseline, delta, priorities):
     #city_priorities = [[0.3, 0.3, 0.2, 0.2],[0.2, 0.5, 0.2, 0.1],[0.5, 0.4, 0.1, 0],[0.7, 0.3, 0, 0]]  
 
     if delta > 0:
-        investment = delta * np.array(priorities) / 50
+        investment = delta * np.array(priorities) / 90
     else: 
         # if delta < 0, we see some divestment & deterioration
-        investment = delta * (np.ones(4) - np.array(priorities)) / 500
+        investment = delta * (np.ones(4) - np.array(priorities)) / 900
     
     #print(baseline)
     #print(delta)

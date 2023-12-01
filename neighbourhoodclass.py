@@ -57,7 +57,8 @@ class Neighbourhood:
     def supply_demand(self):
 
         # update rent as f(supply, demand); don't let this change by >20% / year
-        self.rent *= np.clip((len(self.resident_list) / self.housing_supply)**0.1,0.8,1.2)
+        self.rent *= np.clip((self.housing_supply / len(self.resident_list))**0.3,0.8,1.2)
+        #print(self.neighbourhood_id,' : ', self.rent)
 
         # more gradually update supply according to change in demand; don't let this change by >5% / year (and it won't matter until next year)
         self.housing_supply *= np.clip((len(self.resident_list) / self.housing_supply)**0.01, 0.95, 1.05)
@@ -78,9 +79,9 @@ def initiate_neighbourhoods(population):
     # lists are for drive; bus; bike; walk
     # list elements are convenience; speed; affordability; sustainability
 
-    west_scores = [[8, 9, 2, 3], [5, 5, 10, 8], [7, 9, 7, 9], [8, 6, 10, 10]]
-    north_scores = [[9, 9, 2, 3], [7, 8, 10, 8], [9, 9, 8, 9], [8, 5, 10, 10]]
-    riverside_scores = [[8, 7, 2, 2], [7, 3, 10, 7], [4, 3, 8, 9], [1, 1, 10, 10]]
+    west_scores = [[8, 9, 2, 3], [5, 5, 10, 8], [7, 8, 8, 10], [8, 7, 10, 10]]
+    north_scores = [[9, 9, 2, 3], [7, 8, 10, 8], [8, 8, 8, 10], [8, 5, 10, 10]]
+    riverside_scores = [[8, 7, 2, 2], [7, 3, 10, 7], [4, 3, 8, 10], [1, 1, 10, 10]]
 
     west = Neighbourhood(6,west_scores, 0)
 
