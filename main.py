@@ -36,6 +36,9 @@ def record_neighbourhood_score_history():
         neighbourhood_score_history[neighbourhood.neighbourhood_id].append(scores)
 
 #Plot Functions
+neighbourhood_transit_history = [[] for i in range(3)] #[west campus, north campus, riverside], records ridership for [car, bus, bike, walk] each month
+neighbourhood_score_history = [[] for i in range(3)] #[west campus, north campus, riverside], records scores for [car, bus, bike, walk] each month
+
 def plot_ridership(): 
     X = np.arange(0, months_per_year*years + 1)
 
@@ -151,20 +154,26 @@ def plot_all_score_histories():
         for j in range(4):
             plot_score_history(i,j)
 
+#------------------------------------------------------------------------------------------------------------------------------------------------
+
 #Tunable Model Inputs
 population = 10000 #How big is the total student population?
 years = 5 #How many years do we run the model?
 
 #Agent Model Inputs
-rent_percent_priority = 0.8 #How much % does rent cost affect overall affordability?
-satisfaction_bump_to_move = 0.2 #How much % increase in satisfaction does a student need to move neighbourhoods? 
+rent_percent_priority = 0.8 #How much % does rent cost affect overall affordability (rent + commute costs)?
+satisfaction_bump_to_move = 0.1 #How much % increase in satisfaction does a student need to move neighbourhoods? 
 
 student_types = ["Sustainability Oriented", "Convenience/Cost Oriented", "Cost Critical"] #What are the classification of student types?
-student_types_percent = [0.1, 0.6, 0.3] #What percentage of total population is each student type?
+student_types_percent = [0.1, 0.45, 0.45] #What percentage of total population is each student type?
 
 sustainability_priorities = [0.2,0.2,0.2,0.4] #What percentages of [speed, convenience, affordability, sustainability] does this student value?
 convenience_cost_priorities = [0.2,0.3,0.4,0.1] #[speed, convenience, affordability, sustainability] 
 cost_critical_priorities = [0.1,0.1,0.7,0.1] #[speed, convenience, affordability, sustainability]
+
+#Monthly Interaction Inputs
+
+
 
 #Other
 city_priorities = [0.2, 0.5, 0.2, 0.1]  #priorities reflect interest in car, bus, bike, pedestrian infrastructure; should sum to 4
@@ -173,15 +182,14 @@ city_priorities = [0.2, 0.5, 0.2, 0.1]  #priorities reflect interest in car, bus
 #Fixed Model Inputs
 months_per_year = 12
 student_priority_profiles = [sustainability_priorities, convenience_cost_priorities, cost_critical_priorities]
+transit_weights_monthly_update = []
 
-#----------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------
 
 #Model
 
 #Step 1: Initiate Population
 population_list = agent.populate_Austin(population, rent_percent_priority, satisfaction_bump_to_move, student_types_percent, student_priority_profiles)
-neighbourhood_transit_history = [[] for i in range(3)] #[west campus, north campus, riverside], records ridership for [car, bus, bike, walk] each month
-neighbourhood_score_history = [[] for i in range(3)] #[west campus, north campus, riverside], records scores for [car, bus, bike, walk] each month
 record_neighbourhood_transit_history()
 
 #Step 2: Initiate Neighbourhoods + Step 3: Define Commute Parameters
