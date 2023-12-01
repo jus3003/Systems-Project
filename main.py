@@ -3,7 +3,7 @@
 
 import agent
 import neighbourhood
-import agent_env_monthly as aem
+import agent_env_periodically as aem
 import agent_env_annual as aea
 import test as unit
 import plots as plot
