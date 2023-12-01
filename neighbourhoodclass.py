@@ -48,11 +48,11 @@ class Neighbourhood:
     # convenience and speed update on a yearly basis due to investment; this will actually go in a separate tab
     # city_priorities is an array for interest in investing in infrastructure for [cars, busses, bikes, pedestrians]
 
-    def yearly_investment(self, city_priorities):
+    # def yearly_investment(self, city_priorities):
 
-        for i in range(4):
-            self.commutescores[i][0] = self.commutescores[i][0] + self.annual_utilization[i] * city_priorities[i] / 100
-            self.commutescores[i][1] = self.commutescores[i][1] + self.annual_utilization[i] * city_priorities[i] / 100
+    #     for i in range(4):
+    #         self.commutescores[i][0] = self.commutescores[i][0] + self.annual_utilization[i] * city_priorities[i] / 100
+    #         self.commutescores[i][1] = self.commutescores[i][1] + self.annual_utilization[i] * city_priorities[i] / 100
 
     def supply_demand(self):
 
