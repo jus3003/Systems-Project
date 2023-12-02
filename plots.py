@@ -122,7 +122,15 @@ def plot_all_score_histories(months_per_year, years, neighbourhood_score_history
 
 
 def record_annual_rent(annual_rent_history, neighbourhood_list):
+    reasonable_rent = 1200 #8/10
+    reasonable_score = 8
+    rent_price_delta_per_point = 200
+
     current_rent = [neighbourhood_list[0].rent, neighbourhood_list[1].rent, neighbourhood_list[2].rent]
+    for i in range(len(current_rent)):
+        score = current_rent[i]
+        current_rent[i] = ((reasonable_score - score)*rent_price_delta_per_point + reasonable_rent)
+
     annual_rent_history.append(current_rent)
 
 def plot_annual_rent(annual_rent_history, years):

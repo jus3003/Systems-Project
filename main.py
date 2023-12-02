@@ -22,7 +22,7 @@ annual_rent_history = []
 #------------------------------------------------------------------------------------------------------------------------------------------------
 
 #Tunable Model Inputs
-population = 5000 #How big is the total student population?
+population = 1000 #How big is the total student population?
 years = 5 #How many years do we run the model?
 periods_per_year = 52
 
@@ -124,7 +124,9 @@ for year in range(years):
 
 #Plot Checks
 
-plot.plot_ridership(months_per_year, years, neighbourhood_transit_history)
-plot.plot_annual_rent(annual_rent_history, years)
+#plot.plot_ridership(months_per_year, years, neighbourhood_transit_history)
+#plot.plot_annual_rent(annual_rent_history, years)
 #plot.plot_score_history("West", "Driving", months_per_year, years, neighbourhood_score_history)
 #plot.plot_all_score_histories(months_per_year, years, neighbourhood_score_history)
+barplot.satisfaction_bar(population_list,student_types_percent)
+barplot.utilization_bar(population_list)
