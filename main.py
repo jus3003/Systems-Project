@@ -5,12 +5,13 @@ import agent
 import neighbourhood
 import agent_env_periodically as aem
 import agent_env_annual as aea
-import test as unit
-import plots as plot
+
 
 #Packages Needed
 import matplotlib.pyplot as plt
 import numpy as np
+import test as unit
+import plots as plot
 
 #Plot Functions
 neighbourhood_transit_history = [[] for i in range(3)] #[west campus, north campus, riverside], records ridership for [car, bus, bike, walk] each month
