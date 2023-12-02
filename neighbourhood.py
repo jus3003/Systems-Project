@@ -44,16 +44,6 @@ class Neighbourhood:
         for resident in self.resident_list:
             self.transit_counts[resident.transit] += 1
 
-
-    # convenience and speed update on a yearly basis due to investment; this will actually go in a separate tab
-    # city_priorities is an array for interest in investing in infrastructure for [cars, busses, bikes, pedestrians]
-
-    # def yearly_investment(self, city_priorities):
-
-    #     for i in range(4):
-    #         self.commutescores[i][0] = self.commutescores[i][0] + self.annual_utilization[i] * city_priorities[i] / 100
-    #         self.commutescores[i][1] = self.commutescores[i][1] + self.annual_utilization[i] * city_priorities[i] / 100
-
     def supply_demand(self):
 
         # update rent as f(supply, demand); don't let this change by >20% / year
@@ -66,15 +56,12 @@ class Neighbourhood:
 
 # In[2]:
 
-
 # Define neighbourhoods 
-
 # scores out of 10: drive, bus, bike, walk; convenience, speed, affordability, sustainability
-
 # using population = populate_Austin(n)
 
 def initiate_neighbourhoods(population):
-
+    
     # commute scores will be a nested list
     # lists are for drive; bus; bike; walk
     # list elements are convenience; speed; affordability; sustainability
@@ -101,3 +88,25 @@ def initiate_neighbourhoods(population):
 
 
     return all_neighbourhoods
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# convenience and speed update on a yearly basis due to investment; this will actually go in a separate tab
+# city_priorities is an array for interest in investing in infrastructure for [cars, busses, bikes, pedestrians]
+
+# def yearly_investment(self, city_priorities):
+
+#     for i in range(4):
+#         self.commutescores[i][0] = self.commutescores[i][0] + self.annual_utilization[i] * city_priorities[i] / 100
+#         self.commutescores[i][1] = self.commutescores[i][1] + self.annual_utilization[i] * city_priorities[i] / 100
