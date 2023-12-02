@@ -12,10 +12,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import test as unit
 import plots as plot
+import plots_2 as barplot
 
 #Plot Functions
 neighbourhood_transit_history = [[] for i in range(3)] #[west campus, north campus, riverside], records ridership for [car, bus, bike, walk] each month
 neighbourhood_score_history = [[] for i in range(3)] #[west campus, north campus, riverside], records scores for [car, bus, bike, walk] each month
+annual_rent_history = []
 
 #------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -99,6 +101,8 @@ for year in range(years):
     for neighbourhood in neighbourhood_list:
         neighbourhood.supply_demand()
 
+    plot.record_annual_rent(annual_rent_history, neighbourhood_list)
+
     # III. Residents Update Satisfaction based on City Investments and New Rent Prices
 
     for resident in population_list:
@@ -116,9 +120,11 @@ for year in range(years):
         neighbourhood.define_residents(population_list)
 
     #unit.test_1(neighbourhood_list)
+    
 
 #Plot Checks
 
 plot.plot_ridership(months_per_year, years, neighbourhood_transit_history)
+plot.plot_annual_rent(annual_rent_history, years)
 #plot.plot_score_history("West", "Driving", months_per_year, years, neighbourhood_score_history)
 #plot.plot_all_score_histories(months_per_year, years, neighbourhood_score_history)

@@ -119,3 +119,37 @@ def plot_all_score_histories(months_per_year, years, neighbourhood_score_history
     for neighbourhood in range(3):
         for commute in range(4):
             plot_specific_score_history(neighbourhood, commute)
+
+
+def record_annual_rent(annual_rent_history, neighbourhood_list):
+    current_rent = [neighbourhood_list[0].rent, neighbourhood_list[1].rent, neighbourhood_list[2].rent]
+    annual_rent_history.append(current_rent)
+
+def plot_annual_rent(annual_rent_history, years):
+    X = np.arange(1, years + 1)
+    rent_history = annual_rent_history.copy()
+
+    #0 = West, 1 = north, 2 = riverside
+    west = []
+    north = []
+    riverside = []
+
+    for year in range(years):
+        west.append(rent_history[year][0])
+        north.append(rent_history[year][1])
+        riverside.append(rent_history[year][2])
+    
+    print(west)
+    print(north)
+    print(riverside)
+
+    plt.figure("Rent Affordability")
+    plt.plot(X, west, label = "West")
+    plt.plot(X, north, label = "North")
+    plt.plot(X, riverside, label = "Riverside")
+
+    plt.legend()
+    plt.show()
+
+
+
