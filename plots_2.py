@@ -23,4 +23,4 @@ def utilization_bar(population_list):
 
     plt.figure(figsize = (10,8))
     plt.bar(utilizations, labels = ['Car','Bus','Bike','Walk'])
-    plt.show()
+    plt.show()  

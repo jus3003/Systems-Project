@@ -169,6 +169,7 @@ def populate_Austin(population, rent_percent_priority, satisfaction_bump_to_move
         population_list.append(Agent(id = i, neighbourhood = assign_neighbourhood, transit = assign_transit, priorities = assign_priorities, rent_percent_priority = rent_percent_priority, satisfaction_bump_to_move = satisfaction_bump_to_move))
         #print(assign_neighbourhood, assign_priorities, assign_transit)
 
+
     return population_list
 
 #population_list = populate_Austin(20)

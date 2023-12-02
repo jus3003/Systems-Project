@@ -23,7 +23,7 @@ annual_rent_history = []
 
 #Tunable Model Inputs
 population = 1000 #How big is the total student population?
-years = 5 #How many years do we run the model?
+years = 15 #How many years do we run the model?
 periods_per_year = 52
 
 #Agent Model Inputs
@@ -40,7 +40,8 @@ cost_critical_priorities = [0.1,0.1,0.7,0.1] #[speed, convenience, affordability
 #Monthly Interaction Inputs
 
 #priorities reflect interest in investing in the convenience, speed, affordability, and sustainability of car, bus, bike, pedestrian infrastructure; should sum to 4
-city_priorities = [[0.1, 0.1, 0, 0],[0.3, 0.5, 0.2, 0.1],[0.3, 0.3, 0.1, 0],[0.3, 0.3, 0, 0]]  
+#city_priorities = [[0.1, 0.1, 0, 0],[0.3, 0.5, 0.2, 0.1],[0.3, 0.3, 0.1, 0],[0.3, 0.3, 0, 0]]  
+city_priorities = [[0.1, 0.1, 0, 0],[0.3, 0.5, 0.2, 0.1],[0.3, 0.3, 0.1, 0],[0.3, 0.3, 0,0]]
 city_priorities = city_priorities / np.sum(city_priorities)
 
 #Fixed Model Inputs
@@ -121,12 +122,15 @@ for year in range(years):
 
     #unit.test_1(neighbourhood_list)
     
+student_type_data = plot.record_student_type_neighbourhood_counts(population_list, student_types_percent, population)
+
 
 #Plot Checks
 
-#plot.plot_ridership(months_per_year, years, neighbourhood_transit_history)
+plot.plot_ridership(months_per_year, years, neighbourhood_transit_history)
 #plot.plot_annual_rent(annual_rent_history, years)
+#plot.plot_student_type_neighbourhood_counts(student_type_data, 2) #[sustainability, cost/convenience, cost critical]
 #plot.plot_score_history("West", "Driving", months_per_year, years, neighbourhood_score_history)
 #plot.plot_all_score_histories(months_per_year, years, neighbourhood_score_history)
-barplot.satisfaction_bar(population_list,student_types_percent)
-barplot.utilization_bar(population_list)
+#barplot.satisfaction_bar(population_list,student_types_percent)
+#barplot.utilization_bar(population_list)

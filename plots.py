@@ -160,4 +160,53 @@ def plot_annual_rent(annual_rent_history, years):
     plt.show()
 
 
+def record_student_type_neighbourhood_counts(population_list, student_types_percent, population):
+
+    neighbourhood_counts = [[0,0,0] for i in range(3)] #[sustainability, cost/convenience, cost critical][west, north, riverside]
+    population_per_archetype = [round(student_types_percent[i] * population) for i in range(3)]
+    
+    ranges = [population_per_archetype[0], population_per_archetype[0]+ population_per_archetype[1], population_per_archetype[0]+ population_per_archetype[1] + population_per_archetype[2]]
+    
+    neighbourhood_transit_counts = [[[0 for i in range(4)] for i in range (3)] for i in range(3)] #[sustainability, cost/convenience, cost critical][west, north, riverside][car, bus, bike, walk]
+    #print(neighbourhood_transit_counts)
+
+
+    for i in range(ranges[0]): #sustainability focused people
+        student = population_list[i]
+        neighbourhood_counts[0][student.neighbourhood] += 1
+        neighbourhood_transit_counts[0][student.neighbourhood][student.transit] += 1
+
+    for i in range(ranges[0], ranges[1]): #sustainability focused people
+        student = population_list[i]
+        neighbourhood_counts[1][student.neighbourhood] += 1
+        neighbourhood_transit_counts[1][student.neighbourhood][student.transit] += 1
+
+    for i in range(ranges[1], ranges[2]):
+        neighbourhood_counts[2][student.neighbourhood] += 1
+        neighbourhood_transit_counts[2][student.neighbourhood][student.transit] += 1
+    
+    # for neighbourhood in neighbourhood_counts:
+    #     print(neighbourhood)
+
+    print(neighbourhood_counts)
+    print(neighbourhood_transit_counts)
+
+    return [neighbourhood_counts,neighbourhood_transit_counts]
+
+def plot_student_type_neighbourhood_counts(student_type_data, student_type):
+    neighbourhood_counts = student_type_data[0]
+    neighbourhood_transit_counts = student_type_data[1]
+
+    plt.figure(figsize = (10,8))
+    #plt.bar(['West', 'North', 'Riverside'], neighbourhood_counts[0], label = 'Sustainable Student')
+    #plt.bar(['West', 'North', 'Riverside'], neighbourhood_counts[1], label = 'Cost/Convenience Student')
+    plt.bar(['West', 'North', 'Riverside'], neighbourhood_counts[2], label = 'Cost Critical Student')
+    plt.show()
+
+    
+    
+    
+
+
+
 
