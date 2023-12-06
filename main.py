@@ -40,7 +40,6 @@ cost_critical_priorities = [0.1,0.1,0.7,0.1] #[speed, convenience, affordability
 #Monthly Interaction Inputs
 
 #priorities reflect interest in investing in the convenience, speed, affordability, and sustainability of car, bus, bike, pedestrian infrastructure; should sum to 4
-#city_priorities = [[0.1, 0.1, 0, 0],[0.3, 0.5, 0.2, 0.1],[0.3, 0.3, 0.1, 0],[0.3, 0.3, 0, 0]]  
 city_priorities = [[0.1, 0.1, 0, 0],[0.3, 0.5, 0.2, 0.1],[0.3, 0.3, 0.1, 0],[0.3, 0.3, 0,0]]
 city_priorities = city_priorities / np.sum(city_priorities)
 
