@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import test as unit
 import plots as plot
-import plots_2 as barplot
+#import plots_2 as barplot
 
 #Plot Functions
 neighbourhood_transit_history = [[] for i in range(3)] #[west campus, north campus, riverside], records ridership for [car, bus, bike, walk] each month
@@ -131,5 +131,5 @@ plot.plot_ridership(months_per_year, years, neighbourhood_transit_history)
 #plot.plot_student_type_neighbourhood_counts(student_type_data, 2) #[sustainability, cost/convenience, cost critical]
 #plot.plot_score_history("West", "Driving", months_per_year, years, neighbourhood_score_history)
 #plot.plot_all_score_histories(months_per_year, years, neighbourhood_score_history)
-#barplot.satisfaction_bar(population_list,student_types_percent)
-#barplot.utilization_bar(population_list)
+#plot.satisfaction_bar(population_list,student_types_percent)
+#plot.utilization_bar(population_list)
